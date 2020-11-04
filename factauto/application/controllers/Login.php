@@ -25,7 +25,7 @@ class Login extends CI_Controller {
             # Create the context
             $context = stream_context_create($opts);
             # Get the response (you can use this for GET)
-            $result = file_get_contents('http://localhost:5000/login', false, $context);
+            $result = file_get_contents($this->config->item('base_api').'login', false, $context);
             
             $retorno = json_decode($result);
 

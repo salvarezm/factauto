@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import logging
 import pyodbc
+from datetime import date
 app = Flask(__name__) 
 
 logging.basicConfig(
@@ -48,9 +49,6 @@ def login():
 
 @app.route("/respuestas", methods=['GET']) 
 def respuestas(): 
-
-
-
 	cursor = getCursor();
 	query = '''SELECT username, fecha_respuesta, resp1, resp2, resp3 FROM respuesta'''
 	cursor.execute(query)
@@ -74,7 +72,43 @@ def respuestas():
 
 @app.route("/responder", methods=['POST']) 
 def responder(): 
-    return "ha respondido" 
+
+	body = request.get_json()
+
+	if('username' not in body or 'resp1' not in body or 'resp2' not in body or 'resp3' not in body):
+		return jsonify({}),400
+
+	#se valida si ha respondido la encuesta en el periodo
+	today = date.today()
+	month = today.strftime("%m")
+
+	cursor = getCursor();
+	query = '''SELECT username, fecha_respuesta, resp1, resp2, resp3 FROM respuesta
+	WHERE month(fecha_respuesta) = ? and username = ?'''
+	cursor.execute(query,month,body["username"])
+	result = cursor.fetchone()
+	if result != None:
+		resp = {
+			"status" : "error",
+			"message": "ya ha respondido la encuesta en el periodo"
+		}
+		return jsonify(resp),200
+
+
+	cursor = getCursor();
+	query = '''INSERT INTO respuesta (username, fecha_respuesta, resp1, resp2, resp3)
+	VALUES
+	(?,?,?,?,?)'''
+	fecha_hoy = today.strftime("%Y-%m-%d")
+	cursor.execute(query,body['username'],fecha_hoy,body['resp1'],body['resp2'],body['resp3'])
+	cursor.commit()
+
+	resp = {
+			"status" : "success"
+			
+		}
+
+	return jsonify(resp),200
 
 def getCursor():
     cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=factauto;UID=sa;PWD=Newit12345678')

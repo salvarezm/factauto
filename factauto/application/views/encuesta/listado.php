@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-    <h3 class="card-title">Bordered Table</h3>
+    <h3 class="card-title">Respuestas enviadas</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -8,52 +8,23 @@
         <thead>                  
         <tr>
             <th style="width: 10px">#</th>
-            <th>Task</th>
-            <th>Progress</th>
-            <th style="width: 40px">Label</th>
+            <th>username</th>
+            <th>fecha respuesta</th>
+            <th>¿Que le gustaria que agregaramos al informe?</th>
+            <th>La información es correcta?</th>
+            <th>es rápido nuestro sitio ?</th>            
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1.</td>
-            <td>Update software</td>
-            <td>
-            <div class="progress progress-xs">
-                <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-            </div>
-            </td>
-            <td><span class="badge bg-danger">55%</span></td>
-        </tr>
-        <tr>
-            <td>2.</td>
-            <td>Clean database</td>
-            <td>
-            <div class="progress progress-xs">
-                <div class="progress-bar bg-warning" style="width: 70%"></div>
-            </div>
-            </td>
-            <td><span class="badge bg-warning">70%</span></td>
-        </tr>
-        <tr>
-            <td>3.</td>
-            <td>Cron job running</td>
-            <td>
-            <div class="progress progress-xs progress-striped active">
-                <div class="progress-bar bg-primary" style="width: 30%"></div>
-            </div>
-            </td>
-            <td><span class="badge bg-primary">30%</span></td>
-        </tr>
-        <tr>
-            <td>4.</td>
-            <td>Fix and squish bugs</td>
-            <td>
-            <div class="progress progress-xs progress-striped active">
-                <div class="progress-bar bg-success" style="width: 90%"></div>
-            </div>
-            </td>
-            <td><span class="badge bg-success">90%</span></td>
-        </tr>
+            <?php for($x=0;$x<count($respuestas);$x++){?>
+                <td><?= $x+1; ?></td>
+                <td><?= $respuestas[$x]->username; ?></td>
+                <td><?= $respuestas[$x]->fecha_respuesta;?></td>
+                <td><?= $respuestas[$x]->resp1;?></td>
+                <td><?= $respuestas[$x]->resp2;?></td>
+                <td><?= $respuestas[$x]->resp3;?></td>
+                
+            <?php } ?>
         </tbody>
     </table>
     </div>

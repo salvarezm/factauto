@@ -53,20 +53,20 @@
                with font-awesome or any other icon font library -->
           <?php if($this->session->has_userdata('username')){ ?>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="<?php echo site_url('encuesta/responder') ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Responder Encuesta</p>
                 </a>
               </li>
                   <?php if($this->session->userdata('role') == "admin"){ ?>
                     <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="<?php echo site_url('encuesta/listado') ?>" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Listado de respuestas</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="#" class="nav-link">
+                      <a href="<?php echo site_url('encuesta/grafico') ?>" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Dashboard</p>
                       </a>
